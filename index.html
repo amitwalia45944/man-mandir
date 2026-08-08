@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Travel Information Form</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f7f6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Form Container */
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
+
+        .form-container h2 {
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .input-group input:focus,
+        .input-group select:focus {
+            border-color: #10b981;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #059669;
+        }
+
+        /* Travel Card */
+        #travelCard {
+            display: none;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #3b82f6;
+            border-top: 10px solid #3b82f6;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #3b82f6;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-header h3 {
+            margin: 0;
+            font-size: 20px;
+            letter-spacing: 1px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-meta {
+            margin-bottom: 15px;
+        }
+
+        .card-meta:last-child {
+            margin-bottom: 0;
+        }
+
+        .card-meta strong {
+            color: #666;
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .card-meta span {
+            color: #222;
+            font-size: 16px;
+        }
+
+        /* Print Style */
+        @media print {
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: #ffffff !important;
+            }
+
+            body {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+            }
+
+            body * {
+                visibility: hidden;
+            }
+
+            #travelCard,
+            #travelCard * {
+                visibility: visible;
+            }
+
+            /* Card को A4 page के exact center में रखें */
+            #travelCard {
+                display: block !important;
+
+                position: absolute !important;
+
+                top: 50% !important;
+                left: 50% !important;
+
+                transform: translate(-50%, -50%) !important;
+
+                width: 350px !important;
+
+                margin: 0 !important;
+
+                border: 2px solid #3b82f6 !important;
+                border-top: 10px solid #3b82f6 !important;
+
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .card-header {
+                background: #3b82f6 !important;
+                color: white !important;
+
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         FORM SECTION
+    ========================== -->
+
+    <div class="form-container" id="mainForm">
+
+        <h2>Travel Information Form</h2>
+
+        <!-- Full Name -->
+        <div class="input-group">
+            <label>Full Name</label>
+
+            <input
+                type="text"
+                id="nameInput"
+                placeholder="Enter Full Name"
+            >
+        </div>
+
+        <!-- Father's Name -->
+        <div class="input-group">
+            <label>Father's Name</label>
+
+            <input
+                type="text"
+                id="fatherNameInput"
+                placeholder="Enter Father's Name"
+            >
+        </div>
+
+        <!-- Phone Number -->
+        <div class="input-group">
+            <label>Phone Number</label>
+
+            <input
+                type="tel"
+                id="phoneInput"
+                placeholder="Enter Phone Number"
+            >
+        </div>
+
+        <!-- Sex -->
+        <div class="input-group">
+            <label>Sex</label>
+
+            <select id="sexInput">
+                <option value="">Select Sex</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Date of Birth -->
+        <div class="input-group">
+            <label>Date of Birth</label>
+
+            <input
+                type="date"
+                id="dobInput"
+            >
+        </div>
+
+        <!-- From -->
+        <div class="input-group">
+            <label>From (Origin)</label>
+
+            <input
+                type="text"
+                id="fromInput"
+                placeholder="Enter Starting City"
+            >
+        </div>
+
+        <!-- To -->
+        <div class="input-group">
+            <label>To (Destination)</label>
+
+            <input
+                type="text"
+                id="toInput"
+                placeholder="Enter Destination City"
+            >
+        </div>
+
+        <!-- Travel Date -->
+        <div class="input-group">
+            <label>Travel Date</label>
+
+            <input
+                type="date"
+                id="dateInput"
+            >
+        </div>
+
+        <!-- Submit -->
+        <button onclick="generateAndPrint()">
+            Submit & Download ID Card
+        </button>
+
+    </div>
+
+
+    <!-- =========================
+         TRAVEL CARD
+    ========================== -->
+
+    <div id="travelCard">
+
+        <div class="card-header">
+            <h3>Travel Pass</h3>
+        </div>
+
+        <div class="card-body">
+
+            <!-- Passenger Name -->
+            <div class="card-meta">
+                <strong>Passenger Name</strong>
+                <span id="cardName"></span>
+            </div>
+
+            <!-- Father's Name -->
+            <div class="card-meta">
+                <strong>Father's Name</strong>
+                <span id="cardFatherName"></span>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="card-meta">
+                <strong>Phone Number</strong>
+                <span id="cardPhone"></span>
+            </div>
+
+            <!-- Sex -->
+            <div class="card-meta">
+                <strong>Sex</strong>
+                <span id="cardSex"></span>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="card-meta">
+                <strong>Date of Birth</strong>
+                <span id="cardDob"></span>
+            </div>
+
+            <!-- Route -->
+            <div class="card-meta">
+                <strong>Route</strong>
+                <span id="cardRoute"></span>
+            </div>
+
+            <!-- Travel Date -->
+            <div class="card-meta">
+                <strong>Date of Journey</strong>
+                <span id="cardDate"></span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        // Date format: DD/MM/YYYY
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "";
+            }
+
+            const date = new Date(dateValue);
+
+            const day = String(
+                date.getDate()
+            ).padStart(2, "0");
+
+            const month = String(
+                date.getMonth() + 1
+            ).padStart(2, "0");
+
+            const year = date.getFullYear();
+
+            return day + "/" + month + "/" + year;
+        }
+
+
+        function generateAndPrint() {
+
+            // Get form values
+            const name =
+                document.getElementById("nameInput").value.trim();
+
+            const fatherName =
+                document.getElementById("fatherNameInput").value.trim();
+
+            const phone =
+                document.getElementById("phoneInput").value.trim();
+
+            const sex =
+                document.getElementById("sexInput").value;
+
+            const dob =
+                document.getElementById("dobInput").value;
+
+            const from =
+                document.getElementById("fromInput").value.trim();
+
+            const to =
+                document.getElementById("toInput").value.trim();
+
+            const travelDate =
+                document.getElementById("dateInput").value;
+
+
+            // Validation
+            if (!name) {
+                alert("Please enter Full Name.");
+                return;
+            }
+
+            if (!fatherName) {
+                alert("Please enter Father's Name.");
+                return;
+            }
+
+            if (!phone) {
+                alert("Please enter Phone Number.");
+                return;
+            }
+
+            if (!sex) {
+                alert("Please select Sex.");
+                return;
+            }
+
+            if (!dob) {
+                alert("Please select Date of Birth.");
+                return;
+            }
+
+            if (!from) {
+                alert("Please enter Starting City.");
+                return;
+            }
+
+            if (!to) {
+                alert("Please enter Destination City.");
+                return;
+            }
+
+            if (!travelDate) {
+                alert("Please select Travel Date.");
+                return;
+            }
+
+
+            // Put data into Travel Card
+            document.getElementById("cardName").textContent =
+                name;
+
+            document.getElementById("cardFatherName").textContent =
+                fatherName;
+
+            document.getElementById("cardPhone").textContent =
+                phone;
+
+            document.getElementById("cardSex").textContent =
+                sex;
+
+            document.getElementById("cardDob").textContent =
+                formatDate(dob);
+
+            document.getElementById("cardRoute").textContent =
+                from + " → " + to;
+
+            document.getElementById("cardDate").textContent =
+                formatDate(travelDate);
+
+
+            // Show card
+            document.getElementById("travelCard").style.display =
+                "block";
+
+
+            // Open print dialog
+            setTimeout(function () {
+                window.print();
+            }, 300);
+        }
+
+
+        // Hide card after printing
+        window.addEventListener("afterprint", function () {
+
+            document.getElementById("travelCard").style.display =
+                "none";
+
+        });
+
+    </script>
+
+</body>
+</html>
