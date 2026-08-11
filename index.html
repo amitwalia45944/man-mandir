@@ -253,65 +253,42 @@
 
             @page {
                 size: A4;
-                margin: 0;
+                margin: 5mm;
             }
 
             html,
             body {
-                width: 210mm !important;
-                height: 297mm !important;
+                width: 100% !important;
+                min-height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: #ffffff !important;
             }
 
             body {
-                display: block !important;
-                position: relative !important;
+                display: grid !important;
+                place-items: center !important;
                 overflow: hidden !important;
             }
 
-            body * {
-                visibility: hidden;
-            }
-
-            #travelCard,
-            #travelCard * {
-                visibility: visible;
+            /* Remove the form from print layout so it cannot create extra pages. */
+            body > :not(#travelCard) {
+                display: none !important;
             }
 
             /* Card One Page Center */
 
             #travelCard {
                 display: block !important;
-
-                position: fixed !important;
-
-                top: 50% !important;
-                left: 50% !important;
-
-                transform: translate(-50%, -50%) !important;
-
                 width: 350px !important;
-
                 height: auto !important;
-
-                max-height: 250mm !important;
-
                 margin: 0 !important;
-
                 overflow: hidden !important;
-
                 border: 2px solid #3b82f6 !important;
-
                 border-top: 10px solid #3b82f6 !important;
-
                 page-break-inside: avoid !important;
-
                 break-inside: avoid !important;
-
                 -webkit-print-color-adjust: exact !important;
-
                 print-color-adjust: exact !important;
             }
 
@@ -434,14 +411,14 @@
         <div class="input-group">
 
             <label>
-                Father's Name/Guardian Name /
-                पिता का नाम/अभिभावक का नाम
+                Father's Name / Husband Name /
+                पिता का नाम/ पति का नाम
             </label>
 
             <input
                 type="text"
                 id="fatherNameInput"
-                placeholder="Enter Father's Name"
+                placeholder="Enter Father's Name/Husband Name"
             >
 
         </div>
@@ -567,8 +544,8 @@
 
 
         <!-- Submit -->
-        <button onclick="generateAndPrint()">
-            Submit & Download Registration Card
+        <button id="submitButton" onclick="generateAndPrint()">
+            Generate & Print Registration Card
         </button>
 
 
@@ -664,8 +641,8 @@
             <div class="card-meta">
 
                 <strong>
-                    Father's Name/Guardian Name /
-                    पिता का नाम/अभिभावक का नाम
+                    Father's Name / Husband Name /
+                    पिता का नाम / पति का नाम
                 </strong>
 
                 <span id="cardFatherName"></span>
@@ -776,199 +753,173 @@
          JAVASCRIPT
     ========================== -->
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getDatabase, ref, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
-        function generateAndPrint() {
+        // Firebase Console > Project settings > Your apps > SDK setup and configuration
+        // Replace every placeholder below with this project's Firebase Web config.
+        const firebaseConfig = {
+            apiKey: "AIzaSyAs22pR1sNL1Jev969jBnS6CN5mZZDO3VU",
+            authDomain: "braj-yatra-registration.firebaseapp.com",
+            // Realtime Database Console > Data tab से इसका exact URL copy करें.
+            databaseURL: "https://braj-yatra-registration-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "braj-yatra-registration",
+            storageBucket: "braj-yatra-registration.firebasestorage.app",
+            messagingSenderId: "873414276163",
+            appId: "1:873414276163:web:43575a1b2aa024411890f6",
+            measurementId: "G-2WWC9C8SC4"
+        };
 
-            // Get form values
+        const requiredFirebaseConfig = ["apiKey", "authDomain", "databaseURL", "projectId", "appId"];
+        const isFirebaseConfigured = requiredFirebaseConfig.every((key) =>
+            firebaseConfig[key] && !firebaseConfig[key].includes("YOUR_")
+        );
+        const database = isFirebaseConfigured ? getDatabase(initializeApp(firebaseConfig)) : null;
 
-            const name =
-                document.getElementById("nameInput").value.trim();
+        async function saveRegistration(registration) {
+            // One transaction updates the counter and the registration together, so
+            // simultaneous users receive unique serial numbers: 1, 2, 3, ...
+            const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
+                const current = currentData || {};
+                const nextSequence = (Number(current.lastSequence) || 0) + 1;
 
+                return {
+                    ...current,
+                    lastSequence: nextSequence,
+                    registrations: {
+                        ...(current.registrations || {}),
+                        [nextSequence]: {
+                            ...registration,
+                            registrationNumber: nextSequence,
+                            createdAt: serverTimestamp()
+                        }
+                    }
+                };
+            });
 
-            const fatherName =
-                document.getElementById("fatherNameInput").value.trim();
-
-
-            const phone =
-                document.getElementById("phoneInput").value.trim();
-
-
-            const sex =
-                document.getElementById("sexInput").value;
-
-
-            const age =
-                document.getElementById("ageInput").value.trim();
-
-
-            const from =
-                document.getElementById("fromInput").value.trim();
-
-
-            const to =
-                document.getElementById("toInput").value.trim();
-
-
-            // Get Photo
-
-            const photoInput =
-                document.getElementById("photoInput");
-
-
-            const photoFile =
-                photoInput.files[0];
-
-
-            // =========================
-            // VALIDATION
-            // =========================
-
-            if (!name) {
-
-                alert("Please enter Full Name.");
-
-                return;
+            if (!result.committed) {
+                throw new Error("Registration could not be saved.");
             }
 
-
-            if (!fatherName) {
-
-                alert("Please enter Father's Name.");
-
-                return;
-            }
-
-
-            if (!phone) {
-
-                alert("Please enter Phone Number.");
-
-                return;
-            }
-
-
-            if (!sex) {
-
-                alert("Please select Sex.");
-
-                return;
-            }
-
-
-            if (!age) {
-
-                alert("Please enter Age.");
-
-                return;
-            }
-
-
-            if (!from) {
-
-                alert("Please enter your full address.");
-
-                return;
-            }
-
-
-            if (!to) {
-
-                alert("Please enter your Aadhar number.");
-
-                return;
-            }
-
-
-            // Photo Validation
-
-            if (!photoFile) {
-
-                alert("Please upload your photo.");
-
-                return;
-            }
-
-
-            // =========================
-            // PUT DATA INTO CARD
-            // =========================
-
-            document.getElementById("cardName").textContent =
-                name;
-
-
-            document.getElementById("cardFatherName").textContent =
-                fatherName;
-
-
-            document.getElementById("cardPhone").textContent =
-                phone;
-
-
-            document.getElementById("cardSex").textContent =
-                sex;
-
-
-            document.getElementById("cardAge").textContent =
-                age;
-
-
-            document.getElementById("cardAddress").textContent =
-                from;
-
-
-            document.getElementById("cardAadhar").textContent =
-                to;
-
-
-            // =========================
-            // SHOW UPLOADED PHOTO
-            // =========================
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-
-                document.getElementById("cardPhoto").src =
-                    event.target.result;
-
-
-                // Show Card
-
-                document.getElementById("travelCard").style.display =
-                    "block";
-
-
-                // Open Print Dialog
-
-                setTimeout(function() {
-
-                    window.print();
-
-                }, 300);
-
-            };
-
-
-            reader.readAsDataURL(photoFile);
-
+            return result.snapshot.val().lastSequence;
         }
 
+        window.generateAndPrint = async function generateAndPrint() {
 
-        // =========================
-        // HIDE CARD AFTER PRINTING
-        // =========================
+            const name = document.getElementById("nameInput").value.trim();
+            const fatherName = document.getElementById("fatherNameInput").value.trim();
+            const phone = document.getElementById("phoneInput").value.trim();
+            const sex = document.getElementById("sexInput").value;
+            const age = document.getElementById("ageInput").value.trim();
+            const address = document.getElementById("fromInput").value.trim();
+            const aadhaar = document.getElementById("toInput").value.trim();
 
-        window.addEventListener("afterprint", function() {
+            const photoInput = document.getElementById("photoInput");
+            const photoFile = photoInput.files[0];
 
-            document.getElementById("travelCard").style.display =
-                "none";
+            // Validation
+            if (!name) {
+                alert("Please enter Full Name.");
+                return;
+            }
 
+            if (!fatherName) {
+                alert("Please enter Father's Name / Husband Name.");
+                return;
+            }
+
+            if (!phone) {
+                alert("Please enter Phone Number.");
+                return;
+            }
+
+            if (!sex) {
+                alert("Please select Sex.");
+                return;
+            }
+
+            if (!age) {
+                alert("Please enter Age.");
+                return;
+            }
+
+            if (!address) {
+                alert("Please enter your full address.");
+                return;
+            }
+
+            if (!/^\d{12}$/.test(aadhaar)) {
+                alert("Please enter a valid 12-digit Aadhaar number.");
+                return;
+            }
+
+            if (!photoFile) {
+                alert("Please upload your photo.");
+                return;
+            }
+
+            if (!isFirebaseConfigured) {
+                alert("Please add your Firebase configuration in index.html before submitting.");
+                return;
+            }
+
+            const submitButton = document.getElementById("submitButton");
+            submitButton.disabled = true;
+            submitButton.textContent = "Saving registration...";
+
+            let registrationNumber;
+            try {
+                registrationNumber = await saveRegistration({
+                    name,
+                    fatherName,
+                    phone,
+                    sex,
+                    age: Number(age),
+                    address,
+                    // Do not keep a full Aadhaar number in a client-accessible database.
+                    aadhaarLast4: aadhaar.slice(-4)
+                });
+            } catch (error) {
+                console.error("Firebase registration save failed:", error);
+                alert("Registration could not be saved. Please check your Firebase configuration and database rules.");
+                submitButton.disabled = false;
+                submitButton.textContent = "Generate & Print Registration Card";
+                return;
+            }
+
+            // The registration is saved before the card is generated and printed.
+            document.getElementById("cardName").textContent = name;
+            document.getElementById("cardFatherName").textContent = fatherName;
+            document.getElementById("cardPhone").textContent = phone;
+            document.getElementById("cardSex").textContent = sex;
+            document.getElementById("cardAge").textContent = age;
+            document.getElementById("cardAddress").textContent = address;
+            document.getElementById("cardAadhar").textContent = aadhaar;
+
+            const photoReader = new FileReader();
+            photoReader.onload = function (event) {
+                document.getElementById("cardPhoto").src = event.target.result;
+                document.getElementById("travelCard").style.display = "block";
+
+                console.info("Registration saved with sequence number:", registrationNumber);
+                submitButton.disabled = false;
+                submitButton.textContent = "Generate & Print Registration Card";
+
+                setTimeout(function () {
+                    window.print();
+                }, 100);
+            };
+            photoReader.onerror = function () {
+                alert("Photo could not be read. Please choose another photo.");
+            };
+            photoReader.readAsDataURL(photoFile);
+        };
+
+        window.addEventListener("afterprint", function () {
+            document.getElementById("travelCard").style.display = "none";
         });
-
     </script>
 
 </body>
 </html>
-
