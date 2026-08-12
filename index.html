@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Registration Form</title>
 
     <style>
@@ -12,7 +13,7 @@
         }
 
         body {
-            background: #f4f7f6;
+            background-color: #f4f7f6;
             padding: 20px;
             display: flex;
             justify-content: center;
@@ -20,6 +21,10 @@
             min-height: 100vh;
             font-family: Arial, sans-serif;
         }
+
+        /* =========================
+           FORM CONTAINER
+        ========================== */
 
         .form-container {
             width: 100%;
@@ -72,24 +77,19 @@
             border-color: #10b981;
         }
 
-        .file-input {
-            padding: 10px !important;
-            background: #fafafa;
-        }
+        /* Photo Upload */
 
-        .file-help {
-            display: block;
-            margin-top: 5px;
-            font-size: 12px;
-            color: #777;
+        .photo-input {
+            padding: 10px !important;
+            background-color: #fafafa;
         }
 
         button {
             width: 100%;
             padding: 14px;
-            background: #10b981;
-            color: #fff;
-            border: 0;
+            background-color: #10b981;
+            color: white;
+            border: none;
             border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
@@ -97,22 +97,13 @@
         }
 
         button:hover {
-            background: #059669;
+            background-color: #059669;
         }
 
-        button:disabled {
-            background: #9ca3af;
-            cursor: not-allowed;
-        }
 
-        .secondary-button {
-            margin-top: 10px;
-            background: #2563eb;
-        }
-
-        .secondary-button:hover {
-            background: #1d4ed8;
-        }
+        /* =========================
+           FORM CONTACT INFORMATION
+        ========================== */
 
         .contact-info {
             margin-top: 20px;
@@ -139,10 +130,15 @@
             color: #333;
         }
 
+
+        /* =========================
+           REGISTRATION CARD
+        ========================== */
+
         #travelCard {
             display: none;
             width: 350px;
-            background: #fff;
+            background: white;
             border-radius: 10px;
             border: 2px solid #f56505;
             border-top: 10px solid #f56505;
@@ -152,72 +148,78 @@
 
         .card-header {
             background: #f56505;
-            color: #fff;
+            color: white;
             padding: 12px;
             text-align: center;
         }
 
         .card-header h2 {
-            margin: 0 0 5px;
+            margin: 0 0 5px 0;
             font-size: 20px;
             line-height: 1.2;
         }
 
         .card-header h3 {
-            margin: 0 0 5px;
+            margin: 0;
             font-size: 13px;
             line-height: 1.3;
             font-weight: normal;
         }
 
-        .registration-number {
-            text-align: center;
-            padding: 7px 0 0;
-            font-size: 13px;
-            font-weight: bold;
-            color: #f56505;
-        }
+        /* =========================
+           CARD PHOTO
+        ========================== */
 
         .card-photo-section {
             text-align: center;
-            padding: 10px 0 5px;
+            padding: 12px 0 5px;
         }
 
         #cardPhoto {
-            width: 80px;
-            height: 100px;
+            width: 90px;
+            height: 110px;
             object-fit: cover;
             border: 2px solid #f56505;
             border-radius: 5px;
+            display: inline-block;
         }
 
         .card-body {
-            padding: 12px 18px;
+            padding: 15px 18px;
         }
 
         .card-meta {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             page-break-inside: avoid;
             break-inside: avoid;
+        }
+
+        .card-meta:last-child {
+            margin-bottom: 0;
         }
 
         .card-meta strong {
             color: #666;
             display: block;
-            font-size: 10px;
+            font-size: 11px;
             text-transform: uppercase;
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .card-meta span {
             color: #222;
-            font-size: 14px;
+            font-size: 15px;
             line-height: 1.3;
             word-break: break-word;
         }
 
+
+        /* =========================
+           CARD CONTACT INFORMATION
+        ========================== */
+
         .card-contact {
-            padding: 8px 15px 12px;
+            padding: 10px 15px 15px;
             border-top: 1px solid #ddd;
             text-align: center;
             color: #555;
@@ -227,50 +229,28 @@
         }
 
         .card-contact .organization-name {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: bold;
             color: #333;
             margin-bottom: 4px;
         }
 
         .card-contact .contact-line {
-            font-size: 10px;
+            font-size: 11px;
             color: #555;
         }
 
-        #savedAadhaarPreview {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            text-align: center;
+        .card-contact .contact-line strong {
+            color: #333;
         }
 
-        #savedAadhaarPreview img {
-            max-width: 100%;
-            max-height: 500px;
-            border: 1px solid #ccc;
-        }
 
-        #savedAadhaarPreview iframe {
-            width: 100%;
-            height: 500px;
-            border: 1px solid #ccc;
-        }
-
-        #viewAadhaarButton {
-            display: none;
-        }
-
-        .status {
-            margin-top: 10px;
-            text-align: center;
-            font-size: 13px;
-            font-weight: bold;
-        }
+        /* =========================
+           PRINT STYLE
+        ========================== */
 
         @media print {
+
             @page {
                 size: A4;
                 margin: 5mm;
@@ -282,7 +262,7 @@
                 min-height: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
-                background: #fff !important;
+                background: #ffffff !important;
             }
 
             body {
@@ -291,9 +271,12 @@
                 overflow: hidden !important;
             }
 
-            body > :not(#travelCard) {
+            /* Remove the form from print layout so it cannot create extra pages. */
+            body> :not(#travelCard) {
                 display: none !important;
             }
+
+            /* Card One Page Center */
 
             #travelCard {
                 display: block !important;
@@ -311,40 +294,87 @@
 
             .card-header {
                 background: #f56505 !important;
-                color: #fff !important;
+                color: white !important;
+
                 padding: 12px !important;
+
                 -webkit-print-color-adjust: exact !important;
+
                 print-color-adjust: exact !important;
             }
 
-            .card-photo-section {
-                padding: 8px 0 5px !important;
+            .card-header h2 {
+                margin: 0 0 5px 0 !important;
+                font-size: 20px !important;
             }
 
-            .card-body {
-                padding: 10px 18px !important;
-            }
-
-            .card-meta {
-                margin-bottom: 7px !important;
-            }
-
-            .card-meta strong {
-                font-size: 9px !important;
-            }
-
-            .card-meta span {
+            .card-header h3 {
+                margin: 0 !important;
                 font-size: 13px !important;
             }
 
+            .card-photo-section {
+                padding: 10px 0 5px !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            #cardPhoto {
+                width: 80px !important;
+                height: 100px !important;
+            }
+
+            .card-body {
+                padding: 12px 18px !important;
+            }
+
+            .card-meta {
+                margin-bottom: 8px !important;
+
+                page-break-inside: avoid !important;
+
+                break-inside: avoid !important;
+            }
+
+            .card-meta strong {
+                font-size: 10px !important;
+
+                margin-bottom: 2px !important;
+            }
+
+            .card-meta span {
+                font-size: 14px !important;
+            }
+
             .card-contact {
-                padding: 7px 15px 10px !important;
+                padding: 8px 15px 12px !important;
+
+                page-break-inside: avoid !important;
+
+                break-inside: avoid !important;
+
+                -webkit-print-color-adjust: exact !important;
+
+                print-color-adjust: exact !important;
+            }
+
+            .card-contact .organization-name {
+                font-size: 11px !important;
+            }
+
+            .card-contact .contact-line {
+                font-size: 10px !important;
             }
         }
     </style>
 </head>
 
+
 <body>
+
+    <!-- =========================
+         REGISTRATION FORM
+    ========================== -->
 
     <div class="form-container" id="mainForm">
 
@@ -356,139 +386,137 @@
         <h3>
             Shri Radha Rani Varshik Braj Yatra 2026
         </h3>
-
         <h2>
             श्री राधा रानी वार्षिक ब्रज यात्रा 2026
         </h2>
 
+
+        <!-- Full Name -->
         <div class="input-group">
-            <label>Full Name / पूरा नाम</label>
-            <input
-                type="text"
-                id="nameInput"
-                placeholder="Enter Full Name"
-            >
+
+            <label>
+                Full Name / पूरा नाम
+            </label>
+
+            <input type="text" id="nameInput" placeholder="Enter Full Name">
+
         </div>
 
+
+        <!-- Father's Name -->
         <div class="input-group">
+
             <label>
                 Father's Name / Husband Name /
-                पिता का नाम / पति का नाम
+                पिता का नाम/ पति का नाम
             </label>
 
-            <input
-                type="text"
-                id="fatherNameInput"
-                placeholder="Enter Father's Name / Husband Name"
-            >
+            <input type="text" id="fatherNameInput" placeholder="Enter Father's Name/Husband Name">
+
         </div>
 
-        <div class="input-group">
-            <label>Phone Number / मोबाइल नंबर</label>
 
-            <input
-                type="tel"
-                id="phoneInput"
-                placeholder="Enter Phone Number"
-            >
+        <!-- Phone Number -->
+        <div class="input-group">
+
+            <label>
+                Phone Number / मोबाइल नंबर
+            </label>
+
+            <input type="tel" id="phoneInput" placeholder="Enter Phone Number">
+
         </div>
 
+
+        <!-- Sex -->
         <div class="input-group">
-            <label>Sex / लिंग</label>
+
+            <label>
+                Sex / लिंग
+            </label>
 
             <select id="sexInput">
-                <option value="">Select Sex / लिंग चुनें</option>
-                <option value="Male">Male / पुरुष</option>
-                <option value="Female">Female / महिला</option>
-                <option value="Other">Other / अन्य</option>
+
+                <option value="">
+                    Select Sex / लिंग चुनें
+                </option>
+
+                <option value="Male">
+                    Male / पुरुष
+                </option>
+
+                <option value="Female">
+                    Female / महिला
+                </option>
+
+                <option value="Other">
+                    Other / अन्य
+                </option>
+
             </select>
+
         </div>
 
+
+        <!-- Age -->
         <div class="input-group">
-            <label>Age / आयु</label>
 
-            <input
-                type="number"
-                id="ageInput"
-                placeholder="Enter Age"
-                min="1"
-                max="120"
-            >
-        </div>
-
-        <div class="input-group">
-            <label>Full Address / पूरा पता</label>
-
-            <input
-                type="text"
-                id="fromInput"
-                placeholder="Enter Your Full Address"
-            >
-        </div>
-
-        <div class="input-group">
-            <label>Enter Aadhaar No / आधार नंबर</label>
-
-            <input
-                type="text"
-                id="toInput"
-                placeholder="Enter 12-digit Aadhaar"
-                inputmode="numeric"
-                maxlength="12"
-            >
-        </div>
-
-        <div class="input-group">
-            <label>Upload Photo / फोटो अपलोड करें</label>
-
-            <input
-                type="file"
-                id="photoInput"
-                class="file-input"
-                accept="image/*"
-            >
-
-            <small class="file-help">
-                Participant की photo चुनें
-            </small>
-        </div>
-
-        <div class="input-group">
             <label>
-                Upload Aadhaar Card / आधार कार्ड अपलोड करें
+                Age / आयु
             </label>
 
-            <input
-                type="file"
-                id="aadhaarFileInput"
-                class="file-input"
-                accept="image/jpeg,image/png,image/webp"
-            >
+            <input type="number" id="ageInput" placeholder="Enter Age" min="1" max="120">
 
-            <small class="file-help">
-                JPG/PNG/WebP image. PDF इस version में नहीं लिया जाएगा।
-            </small>
         </div>
 
-        <button
-            id="submitButton"
-            onclick="generateAndPrint()"
-        >
+
+        <!-- Address -->
+        <div class="input-group">
+
+            <label>
+                Full Address / पूरा पता
+            </label>
+
+            <input type="text" id="fromInput" placeholder="Enter Your Full Address">
+
+        </div>
+
+
+        <!-- Aadhaar Number -->
+        <div class="input-group">
+
+            <label>
+                Enter Aadhaar No / आधार नंबर
+            </label>
+
+            <input type="text" id="toInput" placeholder="Enter 12-digit Aadhaar" inputmode="numeric" pattern="[0-9]{12}"
+                maxlength="12">
+
+        </div>
+
+
+        <!-- =========================
+             PHOTO UPLOAD
+        ========================== -->
+
+        <div class="input-group">
+
+            <label>
+                Upload Photo / फोटो अपलोड करें
+            </label>
+
+            <input type="file" id="photoInput" class="photo-input" accept="image/*">
+
+        </div>
+
+
+        <!-- Submit -->
+        <button id="submitButton" onclick="generateAndPrint()">
             Generate & Print Registration Card
         </button>
 
-        <button
-            id="viewAadhaarButton"
-            class="secondary-button"
-            onclick="viewSavedAadhaar()"
-        >
-            View / Download Saved Aadhaar
-        </button>
 
-        <div id="status" class="status"></div>
-
-        <div id="savedAadhaarPreview"></div>
-
+        <!-- Contact Information -->
         <div class="contact-info">
 
             <div class="organization-name">
@@ -496,17 +524,34 @@
             </div>
 
             <div class="contact-line">
+
                 ☎️
-                <strong>सम्पर्क सूत्र / Contact No:</strong>
+
+                <strong>
+                    सम्पर्क सूत्र / Contact No:
+                </strong>
+
                 <br>
-                80002033395, 8881999332, 9927194000
+
+                80002033395,
+                8881999332,
+                9927194000
+
             </div>
 
         </div>
 
     </div>
 
+
+
+    <!-- =========================
+         REGISTRATION/ID CARD
+    ========================== -->
+
     <div id="travelCard">
+
+        <!-- Card Header -->
 
         <div class="card-header">
 
@@ -518,67 +563,126 @@
             <h3>
                 Shri Radha Rani Varshik Braj Yatra 2026
             </h3>
-
             <h2>
                 श्री राधा रानी वार्षिक ब्रज यात्रा 2026
             </h2>
 
         </div>
 
-        <div class="registration-number">
-            Registration No:
-            <span id="cardRegistrationNumber">-</span>
-        </div>
+
+        <!-- =========================
+             PHOTO
+        ========================== -->
 
         <div class="card-photo-section">
-            <img
-                id="cardPhoto"
-                src=""
-                alt="Participant Photo"
-            >
+
+            <img id="cardPhoto" src="" alt="Participant Photo">
+
         </div>
+
+
+        <!-- Card Body -->
 
         <div class="card-body">
 
-            <div class="card-meta">
-                <strong>Full Name / पूरा नाम</strong>
-                <span id="cardName"></span>
-            </div>
+
+            <!-- Full Name -->
 
             <div class="card-meta">
+
+                <strong>
+                    Full Name / पूरा नाम
+                </strong>
+
+                <span id="cardName"></span>
+
+            </div>
+
+
+            <!-- Father's Name -->
+
+            <div class="card-meta">
+
                 <strong>
                     Father's Name / Husband Name /
                     पिता का नाम / पति का नाम
                 </strong>
+
                 <span id="cardFatherName"></span>
+
             </div>
 
+
+            <!-- Phone Number -->
+
             <div class="card-meta">
-                <strong>Phone Number / मोबाइल नंबर</strong>
+
+                <strong>
+                    Phone Number / मोबाइल नंबर
+                </strong>
+
                 <span id="cardPhone"></span>
+
             </div>
 
+
+            <!-- Sex -->
+
             <div class="card-meta">
-                <strong>Sex / लिंग</strong>
+
+                <strong>
+                    Sex / लिंग
+                </strong>
+
                 <span id="cardSex"></span>
+
             </div>
 
+
+            <!-- Age -->
+
             <div class="card-meta">
-                <strong>Age / आयु</strong>
+
+                <strong>
+                    Age / आयु
+                </strong>
+
                 <span id="cardAge"></span>
+
             </div>
 
+
+            <!-- Address -->
+
             <div class="card-meta">
-                <strong>Full Address / पूरा पता</strong>
+
+                <strong>
+                    Full Address / पूरा पता
+                </strong>
+
                 <span id="cardAddress"></span>
+
             </div>
 
+
+            <!-- Aadhaar Number -->
+
             <div class="card-meta">
-                <strong>Aadhaar Number / आधार नंबर</strong>
+
+                <strong>
+                    Aadhaar Number / आधार नंबर
+                </strong>
+
                 <span id="cardAadhar"></span>
+
             </div>
 
         </div>
+
+
+        <!-- =========================
+             CARD CONTACT
+        ========================== -->
 
         <div class="card-contact">
 
@@ -587,36 +691,42 @@
             </div>
 
             <div class="contact-line">
+
                 ☎️
-                <strong>सम्पर्क सूत्र / Contact No:</strong>
+
+                <strong>
+                    सम्पर्क सूत्र / Contact No:
+                </strong>
+
                 <br>
-                80002033395, 8881999332, 9927194000
+
+                80002033395,
+                8881999332,
+                9927194000
+
             </div>
 
         </div>
 
     </div>
 
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
     <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getDatabase, ref, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
-        import { initializeApp }
-            from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-
-        import {
-            getDatabase,
-            ref,
-            runTransaction,
-            serverTimestamp,
-            update,
-            get
-        }
-            from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
-
+        // Firebase Console > Project settings > Your apps > SDK setup and configuration
+        // Replace every placeholder below with this project's Firebase Web config.
         const firebaseConfig = {
             apiKey: "AIzaSyAs22pR1sNL1Jev969jBnS6CN5mZZDO3VU",
             authDomain: "braj-yatra-registration.firebaseapp.com",
-            databaseURL:
-                "https://braj-yatra-registration-default-rtdb.asia-southeast1.firebasedatabase.app",
+            // Realtime Database Console > Data tab से इसका exact URL copy करें.
+            databaseURL: "https://braj-yatra-registration-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "braj-yatra-registration",
             storageBucket: "braj-yatra-registration.firebasestorage.app",
             messagingSenderId: "873414276163",
@@ -624,194 +734,61 @@
             measurementId: "G-2WWC9C8SC4"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const database = getDatabase(app);
+        const requiredFirebaseConfig = ["apiKey", "authDomain", "databaseURL", "projectId", "appId"];
+        const isFirebaseConfigured = requiredFirebaseConfig.every((key) =>
+            firebaseConfig[key] && !firebaseConfig[key].includes("YOUR_")
+        );
+        const database = isFirebaseConfigured ? getDatabase(initializeApp(firebaseConfig)) : null;
 
-        let lastSavedAadhaarDataUrl = "";
-        let lastSavedAadhaarName = "";
-        let lastRegistrationNumber = "";
+        async function saveRegistration(registration) {
+            // One transaction updates the counter and the registration together, so
+            // simultaneous users receive unique serial numbers: 1, 2, 3, ...
+            const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
+                const current = currentData || {};
+                const nextSequence = (Number(current.lastSequence) || 0) + 1;
 
-        function setStatus(message, isError = false) {
-            const element = document.getElementById("status");
-
-            element.textContent = message;
-            element.style.color = isError ? "#dc2626" : "#059669";
-        }
-
-        function compressImage(file, maxWidth = 1200, quality = 0.72) {
-
-            return new Promise((resolve, reject) => {
-
-                const reader = new FileReader();
-
-                reader.onload = (event) => {
-
-                    const image = new Image();
-
-                    image.onload = () => {
-
-                        const scale = Math.min(
-                            1,
-                            maxWidth / image.width
-                        );
-
-                        const canvas = document.createElement("canvas");
-
-                        canvas.width = Math.max(
-                            1,
-                            Math.round(image.width * scale)
-                        );
-
-                        canvas.height = Math.max(
-                            1,
-                            Math.round(image.height * scale)
-                        );
-
-                        const context = canvas.getContext("2d");
-
-                        context.drawImage(
-                            image,
-                            0,
-                            0,
-                            canvas.width,
-                            canvas.height
-                        );
-
-                        resolve(
-                            canvas.toDataURL(
-                                "image/jpeg",
-                                quality
-                            )
-                        );
-                    };
-
-                    image.onerror = () => {
-                        reject(
-                            new Error(
-                                "Aadhaar image could not be read."
-                            )
-                        );
-                    };
-
-                    image.src = event.target.result;
-                };
-
-                reader.onerror = () => {
-                    reject(
-                        new Error("File could not be read.")
-                    );
-                };
-
-                reader.readAsDataURL(file);
-            });
-        }
-
-        async function saveRegistration(data) {
-
-            const result = await runTransaction(
-                ref(database, "registrationData"),
-                (currentData) => {
-
-                    const current = currentData || {};
-
-                    const nextSequence =
-                        (Number(current.lastSequence) || 0) + 1;
-
-                    return {
-                        ...current,
-
-                        lastSequence: nextSequence,
-
-                        registrations: {
-                            ...(current.registrations || {}),
-
-                            [nextSequence]: {
-                                ...data,
-                                registrationNumber: nextSequence,
-                                createdAt: serverTimestamp()
-                            }
+                return {
+                    ...current,
+                    lastSequence: nextSequence,
+                    registrations: {
+                        ...(current.registrations || {}),
+                        [nextSequence]: {
+                            ...registration,
+                            registrationNumber: nextSequence,
+                            createdAt: serverTimestamp()
                         }
-                    };
-                }
-            );
+                    }
+                };
+            });
 
             if (!result.committed) {
-                throw new Error(
-                    "Registration could not be saved."
-                );
+                throw new Error("Registration could not be saved.");
             }
 
             return result.snapshot.val().lastSequence;
         }
 
-        async function saveAadhaarInRealtimeDatabase(
-            registrationNumber,
-            file
-        ) {
+        window.generateAndPrint = async function generateAndPrint() {
 
-            const dataUrl = await compressImage(file);
+            const name = document.getElementById("nameInput").value.trim();
+            const fatherName = document.getElementById("fatherNameInput").value.trim();
+            const phone = document.getElementById("phoneInput").value.trim();
+            const sex = document.getElementById("sexInput").value;
+            const age = document.getElementById("ageInput").value.trim();
+            const address = document.getElementById("fromInput").value.trim();
+            const aadhaar = document.getElementById("toInput").value.trim();
 
-            const record = {
-                aadhaarFileName: file.name,
-                aadhaarMimeType: "image/jpeg",
-                aadhaarDataUrl: dataUrl,
-                aadhaarUploadStatus: "uploaded",
-                aadhaarSavedAt: serverTimestamp()
-            };
+            const photoInput = document.getElementById("photoInput");
+            const photoFile = photoInput.files[0];
 
-            await update(
-                ref(
-                    database,
-                    "registrationData/registrations/" +
-                    registrationNumber
-                ),
-                record
-            );
-
-            return dataUrl;
-        }
-
-        window.generateAndPrint = async function () {
-
-            const name =
-                document.getElementById("nameInput").value.trim();
-
-            const fatherName =
-                document.getElementById("fatherNameInput").value.trim();
-
-            const phone =
-                document.getElementById("phoneInput").value.trim();
-
-            const sex =
-                document.getElementById("sexInput").value;
-
-            const age =
-                document.getElementById("ageInput").value.trim();
-
-            const address =
-                document.getElementById("fromInput").value.trim();
-
-            const aadhaar =
-                document.getElementById("toInput").value.trim();
-
-            const photoFile =
-                document.getElementById("photoInput").files[0];
-
-            const aadhaarFile =
-                document.getElementById("aadhaarFileInput").files[0];
-
-            const submitButton =
-                document.getElementById("submitButton");
-
+            // Validation
             if (!name) {
                 alert("Please enter Full Name.");
                 return;
             }
 
             if (!fatherName) {
-                alert(
-                    "Please enter Father's Name / Husband Name."
-                );
+                alert("Please enter Father's Name / Husband Name.");
                 return;
             }
 
@@ -831,255 +808,80 @@
             }
 
             if (!address) {
-                alert("Please enter your Full Address.");
+                alert("Please enter your full address.");
                 return;
             }
 
             if (!/^\d{12}$/.test(aadhaar)) {
-                alert(
-                    "Please enter a valid 12-digit Aadhaar number."
-                );
+                alert("Please enter a valid 12-digit Aadhaar number.");
                 return;
             }
 
             if (!photoFile) {
-                alert("Please upload your Photo.");
+                alert("Please upload your photo.");
                 return;
             }
 
-            if (!aadhaarFile) {
-                alert("Please upload Aadhaar Card image.");
+            if (!isFirebaseConfigured) {
+                alert("Please add your Firebase configuration in index.html before submitting.");
                 return;
             }
 
-            if (aadhaarFile.size > 8 * 1024 * 1024) {
-                alert(
-                    "Aadhaar image 8 MB से छोटी रखें."
-                );
-                return;
-            }
-
+            const submitButton = document.getElementById("submitButton");
             submitButton.disabled = true;
-            submitButton.textContent = "Saving...";
+            submitButton.textContent = "Saving registration...";
 
+            let registrationNumber;
+            try {
+                registrationNumber = await saveRegistration({
+                    name,
+                    fatherName,
+                    phone,
+                    sex,
+                    age: Number(age),
+                    address,
+                    // Do not keep a full Aadhaar number in a client-accessible database.
+                    aadhaarLast4: aadhaar.slice(-4)
+                });
+            } catch (error) {
+                console.error("Firebase registration save failed:", error);
+                alert("Registration could not be saved. Please check your Firebase configuration and database rules.");
+                submitButton.disabled = false;
+                submitButton.textContent = "Generate & Print Registration Card";
+                return;
+            }
+
+            // The registration is saved before the card is generated and printed.
             document.getElementById("cardName").textContent = name;
-            document.getElementById("cardFatherName").textContent =
-                fatherName;
+            document.getElementById("cardFatherName").textContent = fatherName;
             document.getElementById("cardPhone").textContent = phone;
             document.getElementById("cardSex").textContent = sex;
             document.getElementById("cardAge").textContent = age;
-            document.getElementById("cardAddress").textContent =
-                address;
-            document.getElementById("cardAadhar").textContent =
-                aadhaar;
+            document.getElementById("cardAddress").textContent = address;
+            document.getElementById("cardAadhar").textContent = aadhaar;
 
             const photoReader = new FileReader();
+            photoReader.onload = function (event) {
+                document.getElementById("cardPhoto").src = event.target.result;
+                document.getElementById("travelCard").style.display = "block";
 
-            photoReader.onload = async function (event) {
-
-                document.getElementById("cardPhoto").src =
-                    event.target.result;
-
-                document.getElementById("travelCard").style.display =
-                    "block";
-
-                try {
-
-                    const registrationNumber =
-                        await saveRegistration({
-                            name,
-                            fatherName,
-                            phone,
-                            sex,
-                            age: Number(age),
-                            address,
-                            aadhaarLast4: aadhaar.slice(-4),
-                            aadhaarFileName: aadhaarFile.name,
-                            aadhaarUploadStatus: "saving"
-                        });
-
-                    lastRegistrationNumber =
-                        String(registrationNumber);
-
-                    document.getElementById(
-                        "cardRegistrationNumber"
-                    ).textContent = registrationNumber;
-
-                    setStatus(
-                        "Registration saved. Aadhaar saving..."
-                    );
-
-                    const dataUrl =
-                        await saveAadhaarInRealtimeDatabase(
-                            registrationNumber,
-                            aadhaarFile
-                        );
-
-                    lastSavedAadhaarDataUrl = dataUrl;
-                    lastSavedAadhaarName = aadhaarFile.name;
-
-                    document.getElementById(
-                        "viewAadhaarButton"
-                    ).style.display = "block";
-
-                    setStatus(
-                        "Aadhaar Firebase Realtime Database में save हो गया।"
-                    );
-
-                    setTimeout(() => {
-                        window.print();
-                    }, 200);
-
-                } catch (error) {
-
-                    console.error(error);
-
-                    setStatus(
-                        "Firebase save failed: " +
-                        (error.message || error),
-                        true
-                    );
-
-                    alert(
-                        "Registration/Aadhaar Firebase में save नहीं हुआ। Console में error देखें."
-                    );
-
-                } finally {
-
-                    submitButton.disabled = false;
-
-                    submitButton.textContent =
-                        "Generate & Print Registration Card";
-                }
-            };
-
-            photoReader.onerror = () => {
-
-                alert("Photo could not be read.");
-
+                console.info("Registration saved with sequence number:", registrationNumber);
                 submitButton.disabled = false;
+                submitButton.textContent = "Generate & Print Registration Card";
 
-                submitButton.textContent =
-                    "Generate & Print Registration Card";
+                setTimeout(function () {
+                    window.print();
+                }, 100);
             };
-
+            photoReader.onerror = function () {
+                alert("Photo could not be read. Please choose another photo.");
+            };
             photoReader.readAsDataURL(photoFile);
         };
 
-        window.viewSavedAadhaar = async function () {
-
-            try {
-
-                let dataUrl = lastSavedAadhaarDataUrl;
-                let fileName = lastSavedAadhaarName;
-
-                if (!dataUrl && lastRegistrationNumber) {
-
-                    const snapshot = await get(
-                        ref(
-                            database,
-                            "registrationData/registrations/" +
-                            lastRegistrationNumber
-                        )
-                    );
-
-                    const data = snapshot.val();
-
-                    if (data) {
-                        dataUrl = data.aadhaarDataUrl || "";
-                        fileName =
-                            data.aadhaarFileName ||
-                            "aadhaar.jpg";
-                    }
-                }
-
-                if (!dataUrl) {
-                    alert("Saved Aadhaar नहीं मिला.");
-                    return;
-                }
-
-                const preview =
-                    document.getElementById(
-                        "savedAadhaarPreview"
-                    );
-
-                preview.style.display = "block";
-                preview.innerHTML = "";
-
-                const title =
-                    document.createElement("div");
-
-                title.style.marginBottom = "10px";
-
-                title.innerHTML =
-                    "<strong>" +
-                    fileName.replace(/[<>&"]/g, "") +
-                    "</strong>";
-
-                preview.appendChild(title);
-
-                const image =
-                    document.createElement("img");
-
-                image.src = dataUrl;
-                image.alt = "Saved Aadhaar";
-
-                preview.appendChild(image);
-
-                const lineBreak =
-                    document.createElement("br");
-
-                preview.appendChild(lineBreak);
-
-                const link =
-                    document.createElement("a");
-
-                link.href = dataUrl;
-
-                link.download =
-                    fileName.replace(
-                        /\.[^.]+$/,
-                        ""
-                    ) + "_saved.jpg";
-
-                link.textContent =
-                    "Download Aadhaar";
-
-                link.style.display = "inline-block";
-                link.style.marginTop = "10px";
-                link.style.padding = "10px 15px";
-                link.style.background = "#2563eb";
-                link.style.color = "#fff";
-                link.style.textDecoration = "none";
-                link.style.borderRadius = "6px";
-
-                preview.appendChild(link);
-
-                preview.scrollIntoView({
-                    behavior: "smooth"
-                });
-
-            } catch (error) {
-
-                console.error(error);
-
-                alert(
-                    "Aadhaar देखने में error: " +
-                    error.message
-                );
-            }
-        };
-
-        window.addEventListener(
-            "afterprint",
-            function () {
-
-                document.getElementById(
-                    "travelCard"
-                ).style.display = "none";
-            }
-        );
-
+        window.addEventListener("afterprint", function () {
+            document.getElementById("travelCard").style.display = "none";
+        });
     </script>
 
 </body>
