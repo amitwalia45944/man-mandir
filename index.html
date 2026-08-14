@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Registration Form</title>
+    <link rel="icon" type="image/png" href="mor-pankh.jpeg">
 
     <style>
         * {
@@ -48,6 +49,29 @@
             text-align: center;
             font-size: 17px;
             line-height: 1.5;
+        }
+
+        .page-header {
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+                url("header.jpeg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            color: white;
+            padding: 15px 10px;
+            margin: -30px -30px 25px -30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+
+        .page-header h2,
+        .page-header h3 {
+            color: white;
+            margin-top: 5px;
+            margin-bottom: 8px;
         }
 
         .input-group {
@@ -100,6 +124,28 @@
             background-color: #059669;
         }
 
+        /* =========================
+                    LOADER
+        ========================= */
+
+        .loader {
+        width: 18px;
+        height: 18px;
+        border: 3px solid rgba(255, 255, 255, 0.4);
+        border-top: 3px solid white;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 8px;
+        animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+        to {
+                transform: rotate(360deg);
+            }
+        }
+
 
         /* =========================
            FORM CONTACT INFORMATION
@@ -147,10 +193,20 @@
         }
 
         .card-header {
-            background: #f56505;
+            
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+                url("header.jpeg");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
             color: white;
             padding: 12px;
             text-align: center;
+
+            position: relative;
         }
 
         .card-header h2 {
@@ -285,7 +341,7 @@
                 margin: 0 !important;
                 overflow: hidden !important;
                 border: 2px solid #f56505 !important;
-                border-top: 10px solid #f56505 !important;
+                border-top: none !important;
                 page-break-inside: avoid !important;
                 break-inside: avoid !important;
                 -webkit-print-color-adjust: exact !important;
@@ -293,15 +349,21 @@
             }
 
             .card-header {
-                background: #f56505 !important;
-                color: white !important;
+               
+                background-image:
+                linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+                url("header.jpeg");
 
-                padding: 12px !important;
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
 
-                -webkit-print-color-adjust: exact !important;
+                color: white;
+                padding: 12px;
+                text-align: center;
 
-                print-color-adjust: exact !important;
-            }
+                position: relative;
+                }
 
             .card-header h2 {
                 margin: 0 0 5px 0 !important;
@@ -378,17 +440,20 @@
 
     <div class="form-container" id="mainForm">
 
-        <h3>
-            Registration Form<br>
-            पंजीकरण फॉर्म
-        </h3>
-
-        <h3>
-            Shri Radha Rani Varshik Braj Yatra 2026
-        </h3>
-        <h2>
-            श्री राधा रानी वार्षिक ब्रज यात्रा 2026
-        </h2>
+        <div class="page-header">
+            <h3>
+                Registration Form<br>
+                पंजीकरण फॉर्म
+            </h3>
+        
+            <h3>
+                Shri Radha Rani Varshik Braj Yatra 2026
+            </h3>
+        
+            <h2>
+                श्री राधा रानी वार्षिक ब्रज यात्रा 2026
+            </h2>
+        </div>
 
 
         <!-- Full Name -->
@@ -509,23 +574,11 @@
 
         </div>
 
-        <div class="input-group">
-            <label>Aadhaar Front / आधार कार्ड Front</label>
-            <input type="file" id="aadhaarFrontInput" class="photo-input" accept="image/*">
-        </div>
-
-        <div class="input-group">
-            <label>Aadhaar Back / आधार कार्ड Back</label>
-            <input type="file" id="aadhaarBackInput" class="photo-input" accept="image/*">
-        </div>
-
 
         <!-- Submit -->
         <button id="submitButton" onclick="generateAndPrint()">
             Generate & Print Registration Card
         </button>
-
-        <div id="uploadStatus" style="display:none;margin-top:10px;text-align:center;font-size:14px;font-weight:600;"></div>
 
 
         <!-- Contact Information -->
@@ -730,13 +783,14 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import {
-            getDatabase, ref, runTransaction, serverTimestamp
-        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+        import { getDatabase, ref, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
+        // Firebase Console > Project settings > Your apps > SDK setup and configuration
+        // Replace every placeholder below with this project's Firebase Web config.
         const firebaseConfig = {
             apiKey: "AIzaSyAs22pR1sNL1Jev969jBnS6CN5mZZDO3VU",
             authDomain: "braj-yatra-registration.firebaseapp.com",
+            // Realtime Database Console > Data tab से इसका exact URL copy करें.
             databaseURL: "https://braj-yatra-registration-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "braj-yatra-registration",
             storageBucket: "braj-yatra-registration.firebasestorage.app",
@@ -745,87 +799,42 @@
             measurementId: "G-2WWC9C8SC4"
         };
 
-        // Replace these two values with your Cloudinary details.
-        // Upload Preset must be UNSIGNED.
-        const CLOUDINARY_CLOUD_NAME = "dmsfqe4h";
-        const CLOUDINARY_UPLOAD_PRESET = "braj_yatra_upload";
-
-        const required = ["apiKey","authDomain","databaseURL","projectId","appId"];
-        const firebaseReady = required.every(k => firebaseConfig[k] && !firebaseConfig[k].includes("YOUR_"));
-        const cloudinaryReady =
-            CLOUDINARY_CLOUD_NAME && !CLOUDINARY_CLOUD_NAME.includes("YOUR_") &&
-            CLOUDINARY_UPLOAD_PRESET && !CLOUDINARY_UPLOAD_PRESET.includes("YOUR_");
-
-        const database = firebaseReady ? getDatabase(initializeApp(firebaseConfig)) : null;
-
-        const MAX_PHOTO = 5 * 1024 * 1024;
-        const MAX_AADHAAR = 8 * 1024 * 1024;
-
-        function status(message, type = "info") {
-            const el = document.getElementById("uploadStatus");
-            el.style.display = "block";
-            el.textContent = message;
-            el.style.color = type === "error" ? "#dc2626" :
-                              type === "success" ? "#059669" : "#555";
-        }
-
-        async function uploadToCloudinary(file, folder) {
-            if (!cloudinaryReady) {
-                throw new Error("Cloudinary Cloud Name / Unsigned Upload Preset is missing.");
-            }
-
-            const url =
-                `https://api.cloudinary.com/v1_1/${encodeURIComponent(CLOUDINARY_CLOUD_NAME)}/image/upload`;
-
-            const data = new FormData();
-            data.append("file", file);
-            data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-            data.append("folder", folder);
-
-            const response = await fetch(url, {
-                method: "POST",
-                body: data
-            });
-
-            const result = await response.json();
-
-            if (!response.ok || !result.secure_url) {
-                console.error("Cloudinary:", result);
-                throw new Error(result.error?.message || "Cloudinary upload failed.");
-            }
-
-            return result.secure_url;
-        }
+        const requiredFirebaseConfig = ["apiKey", "authDomain", "databaseURL", "projectId", "appId"];
+        const isFirebaseConfigured = requiredFirebaseConfig.every((key) =>
+            firebaseConfig[key] && !firebaseConfig[key].includes("YOUR_")
+        );
+        const database = isFirebaseConfigured ? getDatabase(initializeApp(firebaseConfig)) : null;
 
         async function saveRegistration(registration) {
-            if (!database) throw new Error("Firebase is not configured.");
+            // One transaction updates the counter and the registration together, so
+            // simultaneous users receive unique serial numbers: 1, 2, 3, ...
+            const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
+                const current = currentData || {};
+                const nextSequence = (Number(current.lastSequence) || 0) + 1;
 
-            const result = await runTransaction(
-                ref(database, "registrationData"),
-                currentData => {
-                    const current = currentData || {};
-                    const nextSequence = (Number(current.lastSequence) || 0) + 1;
-
-                    return {
-                        ...current,
-                        lastSequence: nextSequence,
-                        registrations: {
-                            ...(current.registrations || {}),
-                            [nextSequence]: {
-                                ...registration,
-                                registrationNumber: nextSequence,
-                                createdAt: serverTimestamp()
-                            }
+                return {
+                    ...current,
+                    lastSequence: nextSequence,
+                    registrations: {
+                        ...(current.registrations || {}),
+                        [nextSequence]: {
+                            ...registration,
+                            registrationNumber: nextSequence,
+                            createdAt: serverTimestamp()
                         }
-                    };
-                }
-            );
+                    }
+                };
+            });
 
-            if (!result.committed) throw new Error("Registration could not be saved.");
+            if (!result.committed) {
+                throw new Error("Registration could not be saved.");
+            }
+
             return result.snapshot.val().lastSequence;
         }
 
-        window.generateAndPrint = async function () {
+        window.generateAndPrint = async function generateAndPrint() {
+
             const name = document.getElementById("nameInput").value.trim();
             const fatherName = document.getElementById("fatherNameInput").value.trim();
             const phone = document.getElementById("phoneInput").value.trim();
@@ -834,114 +843,121 @@
             const address = document.getElementById("fromInput").value.trim();
             const aadhaar = document.getElementById("toInput").value.trim();
 
-            const photoFile = document.getElementById("photoInput").files[0];
-            const aadhaarFrontFile = document.getElementById("aadhaarFrontInput").files[0];
-            const aadhaarBackFile = document.getElementById("aadhaarBackInput").files[0];
+            const photoInput = document.getElementById("photoInput");
+            const photoFile = photoInput.files[0];
 
-            if (!name) return alert("Please enter Full Name.");
-            if (!fatherName) return alert("Please enter Father's Name / Husband Name.");
-            if (!phone) return alert("Please enter Phone Number.");
-            if (!sex) return alert("Please select Sex.");
-            if (!age) return alert("Please enter Age.");
-            if (!address) return alert("Please enter your full address.");
-            if (!/^\d{12}$/.test(aadhaar)) return alert("Please enter a valid 12-digit Aadhaar number.");
+            // Validation
+            if (!name) {
+                alert("Please enter Full Name.");
+                return;
+            }
 
-            if (!photoFile) return alert("Please upload your photo.");
-            if (!photoFile.type.startsWith("image/")) return alert("Photo must be an image.");
-            if (photoFile.size > MAX_PHOTO) return alert("Photo must be 5 MB or smaller.");
+            if (!fatherName) {
+                alert("Please enter Father's Name / Husband Name.");
+                return;
+            }
 
-            if (!aadhaarFrontFile) return alert("Please upload Aadhaar Front.");
-            if (!aadhaarBackFile) return alert("Please upload Aadhaar Back.");
-            if (!aadhaarFrontFile.type.startsWith("image/")) return alert("Aadhaar Front must be an image.");
-            if (!aadhaarBackFile.type.startsWith("image/")) return alert("Aadhaar Back must be an image.");
-            if (aadhaarFrontFile.size > MAX_AADHAAR) return alert("Aadhaar Front must be 8 MB or smaller.");
-            if (aadhaarBackFile.size > MAX_AADHAAR) return alert("Aadhaar Back must be 8 MB or smaller.");
+            if (!phone) {
+                alert("Please enter Phone Number.");
+                return;
+            }
 
-            if (!firebaseReady) return alert("Firebase configuration is missing.");
-            if (!cloudinaryReady) return alert("Cloudinary configuration is missing.");
+            if (!sex) {
+                alert("Please select Sex.");
+                return;
+            }
 
-            const button = document.getElementById("submitButton");
-            button.disabled = true;
+            if (!age) {
+                alert("Please enter Age.");
+                return;
+            }
 
+            if (!address) {
+                alert("Please enter your full address.");
+                return;
+            }
+
+            if (!/^\d{12}$/.test(aadhaar)) {
+                alert("Please enter a valid 12-digit Aadhaar number.");
+                return;
+            }
+
+            if (!photoFile) {
+                alert("Please upload your photo.");
+                return;
+            }
+
+            if (!isFirebaseConfigured) {
+                alert("Please add your Firebase configuration in index.html before submitting.");
+                return;
+            }
+
+            // const submitButton = document.getElementById("submitButton");
+            // submitButton.disabled = true;
+            // submitButton.textContent = "Saving registration...";
+
+            const submitButton = document.getElementById("submitButton");
+
+            submitButton.disabled = true;
+
+            submitButton.innerHTML = `
+                <span class="loader"></span>
+                Saving registration...
+            `;
+
+            let registrationNumber;
             try {
-                button.textContent = "Uploading Photo...";
-                status("☁️ Photo Cloudinary पर upload हो रही है...");
-                const photoUrl = await uploadToCloudinary(photoFile, "braj-yatra/photos");
-
-                button.textContent = "Uploading Aadhaar Front...";
-                status("☁️ Aadhaar Front Cloudinary पर upload हो रहा है...");
-                const aadhaarFrontUrl =
-                    await uploadToCloudinary(aadhaarFrontFile, "braj-yatra/aadhaar/front");
-
-                button.textContent = "Uploading Aadhaar Back...";
-                status("☁️ Aadhaar Back Cloudinary पर upload हो रहा है...");
-                const aadhaarBackUrl =
-                    await uploadToCloudinary(aadhaarBackFile, "braj-yatra/aadhaar/back");
-
-                button.textContent = "Saving Registration...";
-                status("🔥 Firebase में registration save हो रहा है...");
-
-                const registrationNumber = await saveRegistration({
+                registrationNumber = await saveRegistration({
                     name,
                     fatherName,
                     phone,
                     sex,
                     age: Number(age),
                     address,
-                    aadhaarLast4: aadhaar.slice(-4),
-                    photoUrl,
-                    aadhaarFrontUrl,
-                    aadhaarBackUrl
+                    // Do not keep a full Aadhaar number in a client-accessible database.
+                    aadhaar: aadhaar
                 });
-
-                document.getElementById("cardName").textContent = name;
-                document.getElementById("cardFatherName").textContent = fatherName;
-                document.getElementById("cardPhone").textContent = phone;
-                document.getElementById("cardSex").textContent = sex;
-                document.getElementById("cardAge").textContent = age;
-                document.getElementById("cardAddress").textContent = address;
-                document.getElementById("cardAadhar").textContent =
-                    "XXXX XXXX " + aadhaar.slice(-4);
-
-                const cardPhoto = document.getElementById("cardPhoto");
-
-                // Use the SAME participant photo uploaded to Cloudinary
-                // in the photo box on the ID/registration card.
-                cardPhoto.onload = () => {
-                    document.getElementById("travelCard").style.display = "block";
-
-                    status(
-                        `✅ Registration saved successfully. Registration No: ${registrationNumber}`,
-                        "success"
-                    );
-
-                    console.info("Photo URL:", photoUrl);
-                    console.info("Aadhaar Front URL:", aadhaarFrontUrl);
-                    console.info("Aadhaar Back URL:", aadhaarBackUrl);
-
-                    button.disabled = false;
-                    button.textContent = "Generate & Print Registration Card";
-
-                    setTimeout(() => window.print(), 400);
-                };
-
-                cardPhoto.onerror = () => {
-                    throw new Error("Uploaded photo could not be loaded on the ID card.");
-                };
-
-                // Cloudinary photo URL -> ID card photo
-                cardPhoto.src = photoUrl;
-
             } catch (error) {
-                console.error(error);
-                status("❌ " + error.message, "error");
-                alert("Registration failed.\n\n" + error.message);
-                button.disabled = false;
-                button.textContent = "Generate & Print Registration Card";
+                console.error("Firebase registration save failed:", error);
+                alert("Registration could not be saved. Please check your Firebase configuration and database rules.");
+                // submitButton.disabled = false;
+                // submitButton.textContent = "Generate & Print Registration Card";
+                submitButton.disabled = false;
+                submitButton.innerHTML = "Generate & Print Registration Card";
+                return;
             }
+
+            // The registration is saved before the card is generated and printed.
+            document.getElementById("cardName").textContent = name;
+            document.getElementById("cardFatherName").textContent = fatherName;
+            document.getElementById("cardPhone").textContent = phone;
+            document.getElementById("cardSex").textContent = sex;
+            document.getElementById("cardAge").textContent = age;
+            document.getElementById("cardAddress").textContent = address;
+            document.getElementById("cardAadhar").textContent = aadhaar;
+
+            const photoReader = new FileReader();
+            photoReader.onload = function (event) {
+                document.getElementById("cardPhoto").src = event.target.result;
+                document.getElementById("travelCard").style.display = "block";
+
+                console.info("Registration saved with sequence number:", registrationNumber);
+                // submitButton.disabled = false;
+                // submitButton.textContent = "Generate & Print Registration Card";
+                submitButton.disabled = false;
+                submitButton.innerHTML = "Generate & Print Registration Card";
+
+                setTimeout(function () {
+                    window.print();
+                }, 100);
+            };
+            photoReader.onerror = function () {
+                alert("Photo could not be read. Please choose another photo.");
+            };
+            photoReader.readAsDataURL(photoFile);
         };
 
-        window.addEventListener("afterprint", () => {
+        window.addEventListener("afterprint", function () {
             document.getElementById("travelCard").style.display = "none";
         });
     </script>
