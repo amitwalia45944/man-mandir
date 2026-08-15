@@ -222,6 +222,15 @@
             font-weight: normal;
         }
 
+        .registration-number {
+            text-align: center;
+            padding: 7px 5px 4px;
+            font-size: 13px;
+            font-weight: bold;
+            color: #f50505;
+            background: white;
+        }
+
         /* =========================
            CARD PHOTO
         ========================== */
@@ -642,6 +651,11 @@
         </div>
 
 
+        <div class="registration-number">
+            Registration No. / पंजीकरण संख्या:
+            <strong id="cardRegistrationNumber"></strong>
+        </div>
+
         <!-- =========================
              PHOTO
         ========================== -->
@@ -790,7 +804,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { getDatabase, ref, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+        // import { getDatabase, ref, runTransaction, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
+        import { getDatabase, ref, runTransaction, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-database.js";
 
         // Firebase Console > Project settings > Your apps > SDK setup and configuration
         // Replace every placeholder below with this project's Firebase Web config.
@@ -812,33 +827,58 @@
         );
         const database = isFirebaseConfigured ? getDatabase(initializeApp(firebaseConfig)) : null;
 
+        // async function saveRegistration(registration) {
+        //     // One transaction updates the counter and the registration together, so
+        //     // simultaneous users receive unique serial numbers: 1, 2, 3, ...
+        //     const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
+        //         const current = currentData || {};
+        //         const nextSequence = (Number(current.lastSequence) || 0) + 1;
+
+        //         return {
+        //             ...current,
+        //             lastSequence: nextSequence,
+        //             registrations: {
+        //                 ...(current.registrations || {}),
+        //                 [nextSequence]: {
+        //                     ...registration,
+        //                     registrationNumber: nextSequence,
+        //                     createdAt: serverTimestamp()
+        //                 }
+        //             }
+        //         };
+        //     });
+
+        //     if (!result.committed) {
+        //         throw new Error("Registration could not be saved.");
+        //     }
+
+        //     return result.snapshot.val().lastSequence;
+        // }
+
         async function saveRegistration(registration) {
-            // One transaction updates the counter and the registration together, so
-            // simultaneous users receive unique serial numbers: 1, 2, 3, ...
-            const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
-                const current = currentData || {};
-                const nextSequence = (Number(current.lastSequence) || 0) + 1;
 
-                return {
-                    ...current,
-                    lastSequence: nextSequence,
-                    registrations: {
-                        ...(current.registrations || {}),
-                        [nextSequence]: {
-                            ...registration,
-                            registrationNumber: nextSequence,
-                            createdAt: serverTimestamp()
-                        }
-                    }
-                };
-            });
+                // Sirf counter par transaction chalega
+                const counterRef = ref(database, "counter/lastSequence");
 
-            if (!result.committed) {
-                throw new Error("Registration could not be saved.");
+                const result = await runTransaction(counterRef, (currentValue) => {
+                    return (Number(currentValue) || 0) + 1;
+                });
+
+                if (!result.committed) {
+                    throw new Error("Registration number could not be generated.");
+                }
+
+                const registrationNumber = result.snapshot.val();
+
+                // Registration ko alag node me save karo
+                await set(ref(database, `registrations/${registrationNumber}`), {
+                    ...registration,
+                    registrationNumber: registrationNumber,
+                    createdAt: serverTimestamp()
+                });
+
+                return registrationNumber;
             }
-
-            return result.snapshot.val().lastSequence;
-        }
 
         window.generateAndPrint = async function generateAndPrint() {
 
@@ -932,7 +972,6 @@
                     sex,
                     age: Number(age),
                     address,
-                    // Do not keep a full Aadhaar number in a client-accessible database.
                     aadhaar: aadhaar
                 });
             } catch (error) {
@@ -946,6 +985,7 @@
             }
 
             // The registration is saved before the card is generated and printed.
+            document.getElementById("cardRegistrationNumber").textContent = registrationNumber;
             document.getElementById("cardName").textContent = name;
             document.getElementById("cardFatherName").textContent = fatherName;
             document.getElementById("cardPhone").textContent = phone;
