@@ -614,7 +614,7 @@
 
                 <br>
 
-                80002033395,
+                8000203395,
                 8881999332,
                 9927194000
 
@@ -786,7 +786,7 @@
 
                 <br>
 
-                80002033395,
+                8000203395,
                 8881999332,
                 9927194000
 
@@ -827,33 +827,8 @@
         );
         const database = isFirebaseConfigured ? getDatabase(initializeApp(firebaseConfig)) : null;
 
-        // async function saveRegistration(registration) {
-        //     // One transaction updates the counter and the registration together, so
-        //     // simultaneous users receive unique serial numbers: 1, 2, 3, ...
-        //     const result = await runTransaction(ref(database, "registrationData"), (currentData) => {
-        //         const current = currentData || {};
-        //         const nextSequence = (Number(current.lastSequence) || 0) + 1;
+        const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyY6Jnc_KmbYk-PHkO6yMkaRUa8n9JKfNsWyvMD2BRBByS_R2lln5-eiVZNfmsw6GPIqg/exec"
 
-        //         return {
-        //             ...current,
-        //             lastSequence: nextSequence,
-        //             registrations: {
-        //                 ...(current.registrations || {}),
-        //                 [nextSequence]: {
-        //                     ...registration,
-        //                     registrationNumber: nextSequence,
-        //                     createdAt: serverTimestamp()
-        //                 }
-        //             }
-        //         };
-        //     });
-
-        //     if (!result.committed) {
-        //         throw new Error("Registration could not be saved.");
-        //     }
-
-        //     return result.snapshot.val().lastSequence;
-        // }
 
         async function saveRegistration(registration) {
 
@@ -877,6 +852,43 @@
                     createdAt: serverTimestamp()
                 });
 
+                
+
+                    // =========================
+            // 3. Save to Google Sheet
+            // =========================
+
+            try {
+
+                        const response = await fetch(
+                            GOOGLE_SHEET_URL,
+                            {
+                                method: "POST",
+                                body: JSON.stringify({
+                                    ...registration,
+                                    registrationNumber: registrationNumber
+                                })
+                            }
+                        );
+
+                        if (!response.ok) {
+                            console.error(
+                                "Google Sheet HTTP error:",
+                                response.status
+                            );
+                        }
+
+                    } catch (sheetError) {
+
+                        console.error(
+                            "Google Sheet save failed:",
+                            sheetError
+                        );
+
+                        
+                    }
+
+                
                 return registrationNumber;
             }
 
@@ -903,12 +915,6 @@
                 alert("Please enter Father's Name / Husband Name.");
                 return;
             }
-
-            // if (!phone) {
-            //     alert("Please enter Phone Number.");
-            //     return;
-            // }
-
 
             if (!phone) {
                 alert("Please enter Phone Number.");
@@ -950,10 +956,6 @@
                 return;
             }
 
-            // const submitButton = document.getElementById("submitButton");
-            // submitButton.disabled = true;
-            // submitButton.textContent = "Saving registration...";
-
             const submitButton = document.getElementById("submitButton");
 
             submitButton.disabled = true;
@@ -977,8 +979,6 @@
             } catch (error) {
                 console.error("Firebase registration save failed:", error);
                 alert("Registration could not be saved. Please check your Firebase configuration and database rules.");
-                // submitButton.disabled = false;
-                // submitButton.textContent = "Generate & Print Registration Card";
                 submitButton.disabled = false;
                 submitButton.innerHTML = "Generate & Print Registration Card";
                 return;
@@ -1000,8 +1000,7 @@
                 document.getElementById("travelCard").style.display = "block";
 
                 console.info("Registration saved with sequence number:", registrationNumber);
-                // submitButton.disabled = false;
-                // submitButton.textContent = "Generate & Print Registration Card";
+                
                 submitButton.disabled = false;
                 submitButton.innerHTML = "Generate & Print Registration Card";
 
