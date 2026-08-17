@@ -51,29 +51,22 @@
             line-height: 1.5;
         }
 
+
         .page-header {
             background-image:
                 linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
                 url("header.jpeg");
 
-            background-size: 100% auto;
+            background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
 
-            color: white;
-            padding: 15px 10px;
+            height: 130px;
             margin: -30px -30px 25px -30px;
             border-radius: 12px 12px 0 0;
-            text-align: center;
-        }
+        }       
 
-        .page-header h2,
-        .page-header h3 {
-            color: white;
-            margin-top: 5px;
-            margin-bottom: 8px;
-        }
-
+        
         .input-group {
             margin-bottom: 20px;
         }
@@ -83,6 +76,12 @@
             margin-bottom: 8px;
             color: #555;
             font-size: 14px;
+            font-weight: 600;
+        }
+
+        .english-note {
+            color: #e11d48;
+            font-size: 12px;
             font-weight: 600;
         }
 
@@ -192,35 +191,19 @@
             overflow: hidden;
         }
 
+
         .card-header {
-            
             background-image:
                 linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
                 url("header.jpeg");
 
-            background-size: cover;
+            background-size: 100% 100%;
             background-position: center;
             background-repeat: no-repeat;
 
-            color: white;
-            padding: 12px;
-            text-align: center;
-
-            position: relative;
+            height: 100px;
         }
 
-        .card-header h2 {
-            margin: 0 0 5px 0;
-            font-size: 20px;
-            line-height: 1.2;
-        }
-
-        .card-header h3 {
-            margin: 0;
-            font-size: 13px;
-            line-height: 1.3;
-            font-weight: normal;
-        }
 
         .registration-number {
             text-align: center;
@@ -362,15 +345,12 @@
                 background-image:
                 linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
                 url("header.jpeg");
-
-                background-size: cover;
+                background-size: 100% 100%;
                 background-position: center;
                 background-repeat: no-repeat;
-
                 color: white;
                 padding: 12px;
                 text-align: center;
-
                 position: relative;
                 }
 
@@ -450,18 +430,6 @@
     <div class="form-container" id="mainForm">
 
         <div class="page-header">
-            <h3>
-                Registration Form<br>
-                पंजीकरण फॉर्म
-            </h3>
-        
-            <h3>
-                Shri Radha Rani Varshik Braj Yatra 2026
-            </h3>
-        
-            <h2>
-                श्री राधा रानी वार्षिक ब्रज यात्रा 2026
-            </h2>
         </div>
 
 
@@ -470,6 +438,7 @@
 
             <label>
                 Full Name / पूरा नाम
+                <span class="english-note">(English में ही टाइप करें)</span>
             </label>
 
             <input type="text" id="nameInput" placeholder="Enter Full Name">
@@ -496,8 +465,6 @@
             <label>
                 Phone Number / मोबाइल नंबर
             </label>
-
-            <!-- <input type="tel" id="phoneInput" placeholder="Enter Phone Number"> -->
             <input 
             type="tel" 
             id="phoneInput" 
@@ -635,18 +602,6 @@
         <!-- Card Header -->
 
         <div class="card-header">
-
-            <h3>
-                Registration Form<br>
-                पंजीकरण फॉर्म
-            </h3>
-
-            <h3>
-                Shri Radha Rani Varshik Braj Yatra 2026
-            </h3>
-            <h2>
-                श्री राधा रानी वार्षिक ब्रज यात्रा 2026
-            </h2>
 
         </div>
 
@@ -941,7 +896,7 @@
                 return;
             }
 
-            if (!/^\d{12}$/.test(aadhaar)) {
+            if (aadhaar && !/^\d{12}$/.test(aadhaar)) {
                 alert("Please enter a valid 12-digit Aadhaar number.");
                 return;
             }
